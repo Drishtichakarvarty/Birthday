@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Special Day</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    background: radial-gradient(circle at top, #1a1a2e, #0f3460, #000);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    text-align:center;
+    transition:1s;
+}
+
+/* Stars */
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+.container{
+    z-index:2;
+    max-width:750px;
+    padding:20px;
+}
+
+.loading{
+    font-size:1.2rem;
+    letter-spacing:2px;
+    animation: blink 1.2s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0.4;}
+}
+
+h1{
+    font-family:'Dancing Script',cursive;
+    font-size:3rem;
+    margin-bottom:20px;
+    color:#ffd369;
+}
+
+#message{
+    font-size:1.2rem;
+    min-height:120px;
+    line-height:1.8;
+}
+
+.btn{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:#ffd369;
+    color:#000;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:500;
+}
+
+.btn:hover{
+    transform:scale(1.1);
+    background:white;
+}
+
+.hidden{
+    display:none;
+}
+
+/* Surprise Section */
+.surprise-section{
+    animation: fadeIn 2s ease-in-out;
+}
+
+.photo-frame{
+    margin-top:20px;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    overflow:hidden;
+    margin-left:auto;
+    margin-right:auto;
+    border:6px solid #ffd369;
+    box-shadow:0 0 25px #ffd369;
+    animation: pop 1.5s ease-in-out;
+}
+
+.photo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+@keyframes pop{
+    0%{transform:scale(0);}
+    100%{transform:scale(1);}
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* Floating Hearts */
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    font-size:20px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(100vh); opacity:1;}
+    to{transform:translateY(-10vh); opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="loadingText" class="loading">A Special Message is Loading...</div>
+
+    <div id="mainContent" class="hidden">
+        <h1>Happy Birthday Bhaiya❤️</h1>
+        <div id="message"></div>
+        <button class="btn" onclick="showSurprise()">Open Your Surprise 🎁</button>
+    </div>
+
+    <div id="surprise" class="hidden surprise-section">
+        <h1>You Are Truly Special ✨</h1>
+
+        <div class="photo-frame">
+            <img src="photo.JPG" alt="Birthday Photo">
+        </div>
+
+        <p style="margin-top:20px; line-height:1.8;">
+            May your smile always shine this bright.
+            May success chase you, happiness surround you,
+            and may you achieve everything you dream of.
+            I'm so lucky to have you in my life. 💛
+        </p>
+    </div>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="birthdaySong" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Create stars
+for(let i=0;i<100;i++){
+    let star=document.createElement("div");
+    star.classList.add("star");
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+    document.body.appendChild(star);
+}
+
+// Loading effect
+setTimeout(()=>{
+    document.getElementById("loadingText").classList.add("hidden");
+    document.getElementById("mainContent").classList.remove("hidden");
+    typeMessage();
+},3000);
+
+// Typing Effect
+let text="On this beautiful day, I just want you to know how important you are. You bring joy, laughter, and positivity wherever you go. May this year bring you success, happiness, and everything your heart desires.";
+let i=0;
+
+function typeMessage(){
+    if(i<text.length){
+        document.getElementById("message").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typeMessage,40);
+    }
+}
+
+// Surprise function
+function showSurprise(){
+    document.getElementById("mainContent").classList.add("hidden");
+    document.getElementById("surprise").classList.remove("hidden");
+
+    // Play Music
+    document.getElementById("birthdaySong").play();
+
+    // Floating hearts
+    setInterval(()=>{
+        let heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="❤";
+        heart.style.left=Math.random()*100+"vw";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{heart.remove();},6000);
+    },500);
+}
+
+</script>
+
+</body>
+</html>
